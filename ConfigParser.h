@@ -103,7 +103,7 @@ public:
 
         if (!optional)
             errorFlag = true;
-        return std::make_pair(false, -1);
+        return std::make_pair(false, 0);
     }
 
     std::pair<bool, int> getInt(const std::string& key, int fallback)
@@ -184,7 +184,7 @@ public:
 
         if (!optional)
             errorFlag = true;
-        return std::make_pair(false, 0);
+        return std::make_pair(false, 0.f);
     }
 
     std::pair<bool, float> getFloat(const std::string& key, float fallback)
@@ -211,7 +211,7 @@ public:
 
         if (!optional)
             errorFlag = true;
-        return std::make_pair(false, 0);
+        return std::make_pair(false, 0.);
     }
 
     std::pair<bool, double> getDouble(const std::string& key, double fallback)
