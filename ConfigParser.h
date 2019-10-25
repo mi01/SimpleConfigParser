@@ -11,7 +11,7 @@
 class ConfigParser {
 public:
     ConfigParser(const std::string& filename, char delim = '=', char comment = '#', bool debugOutput = false)
-        : debugOutput(debugOutput)
+        : debugFlag(debugOutput)
         , errorFlag(false)
     {
         std::ifstream file;
@@ -69,7 +69,7 @@ public:
             return std::make_pair(true, val->second);
         }
 
-        if (debugOutput && !optional) {
+        if (debugFlag && !optional) {
             std::cerr << "ERROR: Can not find " << key << " in config!"
                       << std::endl;
         }
@@ -94,7 +94,7 @@ public:
             try {
                 return std::make_pair(true, std::stoi(res.second));
             } catch (std::exception&) {
-                if (debugOutput && !optional) {
+                if (debugFlag && !optional) {
                     std::cerr << "ERROR: Can not parse inter from key " << key
                               << " in config!" << std::endl;
                 }
@@ -121,7 +121,7 @@ public:
             try {
                 return std::make_pair(true, std::stoul(res.second));
             } catch (std::exception&) {
-                if (debugOutput && !optional) {
+                if (debugFlag && !optional) {
                     std::cerr << "ERROR: Can not parse unsigned integer from key "
                               << key << " in config!" << std::endl;
                 }
@@ -148,7 +148,7 @@ public:
             try {
                 return std::make_pair(true, std::stol(res.second));
             } catch (std::exception&) {
-                if (debugOutput && !optional) {
+                if (debugFlag && !optional) {
                     std::cerr << "ERROR: Can not parse long from key " << key
                               << " in config!" << std::endl;
                 }
@@ -175,7 +175,7 @@ public:
             try {
                 return std::make_pair(true, std::stof(res.second));
             } catch (std::exception&) {
-                if (debugOutput && !optional) {
+                if (debugFlag && !optional) {
                     std::cerr << "ERROR: Can not parse float from key " << key
                               << " in config!" << std::endl;
                 }
@@ -202,7 +202,7 @@ public:
             try {
                 return std::make_pair(true, std::stof(res.second));
             } catch (std::exception&) {
-                if (debugOutput && !optional) {
+                if (debugFlag && !optional) {
                     std::cerr << "ERROR: Can not parse double from key " << key
                               << " in config!" << std::endl;
                 }
@@ -226,7 +226,7 @@ public:
     inline bool hasErrors() const { return errorFlag; }
 
 private:
-    bool debugOutput;
+    bool debugFlag;
     bool errorFlag;
     std::map<std::string, std::string> values;
 
@@ -256,7 +256,7 @@ private:
     std::string& trim(std::string& str,
         const std::string& chars = "\t\n\v\f\r ") const
     {
-        return rtrim(ltrim(str));
+        return rtrim(ltrim(str, chars), chars);
     }
 };
 
